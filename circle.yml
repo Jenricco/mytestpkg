@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+    
+dependencies:
+  override:
+    - docker info
+    - docker build -t Jenricco/mytestpkg
+
+test:
+  override:
+    - docker run --name mytestpkg -d -p 8787:8787 Jenricco/mytestpkg
+
