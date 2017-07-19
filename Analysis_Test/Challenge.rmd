@@ -1,0 +1,65 @@
+---
+title: "Challenges"
+author: Henry Schubert
+output: bookdown::html_document2
+bibliography: "../my_references.bib"
+
+---
+
+```{r setup, include=FALSE  }
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Challenge Funktion
+
+
+
+```{r }
+library(mytestpkg)
+```
+
+
+Reproducible research is important for scientific community [@marwick2017computational].Otherwise @roth2016short show the opportunity.And @bellwald2008hydraulic 
+
+
+This is a test function to test the fn:  `r Chal_func(15)`
+
+In table \@ref(tab:summarycars) you can see
+```{r summarycars}
+knitr::kable(head(summary(cars)),  caption = "Summary of cars")
+```
+
+In Figure \@ref(fig:pressureplot) you can clearly see an increase...
+```{r pressureplot, fig.cap="The pressure of"}
+plot(pressure)
+```
+
+This is the function 
+```{r , echo = TRUE}
+Test_func <- function(x){
+  k = x^2
+  return(k)
+}
+Test_func(10)
+Chal_func(5)
+```
+
+If x = 5 the result is `r Chal_func(5)`. And  should be `r number_er(3)`.
+
+
+
+# References
+
+<!--         
+1. Within you ms, add a simple table and plot
+2. Add captions and cross refs to those
+3. Add a bib file & two citations to your ms
+4. Add a second simple function to your R
+5. Add a simple test for this send fn
+6. Have you pkg pass the test
+
+neue Funtionen immer in einer R-Datei speichern und 
+
+
+-->
+

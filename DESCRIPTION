@@ -1,0 +1,14 @@
+Package: mytestpkg
+Type: Package
+Title: Demonstrates some concepts
+Version: 0.1.0
+Author: Sarah I?elhorst
+Maintainer: Sarah I?elhorst <sarah.isselhorst@fu-berlin.de>
+Description: This compendium contains code and
+    data for the publication <http://www.sciencedirect.com.
+    The version that matches the published results is archived at
+    <doi:xxxx/xxx>
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat
