@@ -27,6 +27,10 @@ This is a test function to test the fn:  `r Chal_func(15)`
 In table \@ref(tab:summarycars) you can see
 ```{r summarycars}
 knitr::kable(head(summary(cars)),  caption = "Summary of cars")
+library(binford)
+data(LRB)
+knitr::kable(head(LRB))
+checkpoint::checkpoint("2017-07-20")
 ```
 
 In Figure \@ref(fig:pressureplot) you can clearly see an increase...

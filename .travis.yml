@@ -3,3 +3,7 @@
 language: R
 sudo: false
 cache: packages
+repos:
+  MRAN: "https://mran.microsoft.com/snapshot/2017-07-20"
+
+warnings_are_errors = FALSE
