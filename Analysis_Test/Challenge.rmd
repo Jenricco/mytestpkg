@@ -118,11 +118,13 @@ hist(harran_ppp_nn)
 harran_kde <- density.ppp(harran_ppp, sigma = mean(harran_ppp_nn))
 plot(harran_kde)
 
-# Um das Sigma zu finden, Hypothese Daten eher First order Structure
+# Um das sigma zu finden, Hypothese Daten eher First order Structure
+# bw.ppl - Likelihood Cross Validation Bandwith Selection for Kernel Density
 bw.ppl(harran_ppp)
 plot(bw.ppl(harran_ppp))
 plot(bw.ppl(harran_ppp), xlim = c(2000, 5000))
 # Daten eher Second order Structure - geclustert
+# bw.diggle - Cross Validation Bandwith Selection for Kernel Density
 bw.diggle(harran_ppp)
 ```
 
