@@ -43,10 +43,9 @@ Test_func <- function(x){
   return(k)
 }
 Test_func(10)
-Chal_func(5)
 ```
 
-If x = 5 the result is `r Chal_func(5)`. And  should be `r number_er(3)`. Good calculations!
+Good calculations!
 
 Neuer Text
 
