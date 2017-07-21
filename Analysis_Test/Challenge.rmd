@@ -30,7 +30,6 @@ knitr::kable(head(summary(cars)),  caption = "Summary of cars")
 library(binford)
 data(LRB)
 knitr::kable(head(LRB))
-checkpoint::checkpoint("2017-07-20")
 ```
 
 In Figure \@ref(fig:pressureplot) you can clearly see an increase...
@@ -52,6 +51,133 @@ If x = 5 the result is `r Chal_func(5)`. And  should be `r number_er(3)`. Good c
 
 Neuer Text
 
+# Point Patter
+```{r point pattern}
+harran <- read.table("../data/Sites_HarranPlain.csv", sep = ",", header=TRUE)
+#str(harran)
+
+```
+
+# Spatstat
+```{r}
+library(sp)
+coordinates(harran) <- ~X+Y
+#str(harran)
+proj4string(harran) <- CRS("+init=epsg:4326")
+
+#str(harran)
+harran <- spTransform(harran, CRSobj = CRS("+init=epsg:32637"))
+
+library(spatstat)
+harran_ppp <- ppp(x = harran@coords[,1],
+                  y = harran@coords[,2], 
+                  window = owin(xrange = harran@bbox[1,],
+                                yrange = harran@bbox[2,])
+                  )
+
+harran_ppp <- ppp(x = harran@coords[,1],
+                  y = harran@coords[,2], 
+                  window = owin(xrange = harran@bbox[1,],
+                                yrange = c(min(harran@coords[,2]),
+                                           min(harran@coords[,2]+60000))))
+
+## harran_ppp <- ppp(x = harran@coords[,1],
+                  #y = harran@coords[,2], 
+                  #window = owin(xrange = harran@bbox[1,],
+                                #yrange = c(min(harran@coords[,2]),
+                                           #min(harran@coords[,2]+60000))), check = FALSE)
+
+#str(harran_ppp)
+plot(harran_ppp)
+```
+
+# challenge: delete duplicated points
+```{r chi}
+## Löschen der Punkte, entweder in obere Funktion check = FALSE einbauen, oder die unteren beiden Funktion
+anyDuplicated(harran_ppp)
+harran_ppp <- unique.ppp(harran_ppp)
+# oder
+harran_ppp <- harran_ppp[!duplicated(harran_ppp)]
+
+# Nearest Neighbor Distance
+harran_ppp_nn <- nndist(harran_ppp)
+#str(harran_ppp_nn)
+
+# Verschiedene Dartellungsmöglichkeiten Boxplot 
+boxplot(harran_ppp_nn)
+# sortierte Barplots
+barplot(sort(harran_ppp_nn))
+# Histogramm
+hist(harran_ppp_nn)
+```
+
+# Challenge: create kernel density estimation
+
+```{r ch2}
+# Kernel density estimation, sigma = Bandwidth
+harran_kde <- density.ppp(harran_ppp, sigma = mean(harran_ppp_nn))
+plot(harran_kde)
+
+# Um das Sigma zu finden, Hypothese Daten eher First order Structure
+bw.ppl(harran_ppp)
+plot(bw.ppl(harran_ppp))
+plot(bw.ppl(harran_ppp), xlim = c(2000, 5000))
+# Daten eher Second order Structure - geclustert
+bw.diggle(harran_ppp)
+```
+
+Are our density of point location depends on the elevation?
+
+# Raster
+```{r}
+# Raster importieren mit Paket Raster 
+library(raster)
+dem <- raster("../data/dem.tif")
+# Für spatstat muss das Raster importiert werden
+im_dem <- as.im(as.image.SpatialGridDataFrame(as(dem, "SpatialGridDataFrame")))
+
+# andere Möglichkeit mit Paket rgdal
+# library(rgdal)
+# dem <- readGDAL("../data/dem.tif")
+# hist(dem@data$band1)
+
+```
+
+# Challenge: rhohat
+```{r}
+# Intensity as Function of a Covariate 
+harran_rhohat <- rhohat(object = harran_ppp,
+                        covariate = im_dem,
+                        bw = 200)
+plot(harran_rhohat, xlim = c(350,600))
+
+# Simuliert eine Dichte nur anhand der Höhe
+rho_dem <- predict(harran_rhohat)
+plot(rho_dem)
+
+# Difference zwischen der Dichte durch Kernel Estimation und die simulierte Dichte
+diff_rho <- harran_kde - rho_dem
+plot(diff_rho)
+
+# Create random points with rpoissp function that have the same intensity like our point pattern
+# Random Poisson - vollkommend zufällige Verteilung
+# set.seed sagt dem Computer, wo er anfangen soll, daher ergibt sich immer das gleiche zufällige Ergebnis
+set.seed(123)
+test2 <- rpoispp(harran_ppp$n/area.owin(harran_ppp$window), 
+                           win = harran_ppp$window)
+# andere Variante
+set.seed(123)
+test3 <- rpoispp(intensity(harran_ppp), win=Window(harran_ppp))
+# einfache Variante
+set.seed(123)
+test4 <- rpoispp(ex = harran_ppp)
+
+plot(harran_ppp)
+points(test2, col = "green")
+points(test3, col = "red")
+points(test4, col = "blue")
+
+```
 
 
 # References
