@@ -179,6 +179,40 @@ points(test4, col = "blue")
 
 ```
 
+# Second order effects
+```{r}
+# G-Function compare nearest neighbor (r-radius, km-empirical data)
+harran_g <- Gest(harran_ppp)
+str(harran_g)
+# pois - zufällige Verteilung (pois), clustered beim starken Anstieg über der Kurve
+# Gbord, Ghan Edge-Effect herausgerechnet
+plot(harran_g)
+
+# berechnet Random Points und für diese die G-Function
+harran_ge <- envelope(harran_ppp, fun = "Gest")
+plot(harran_ge)
+
+# F-Function 
+harran_f <- Fest(harran_ppp)
+plot(harran_f)
+harran_fe <- envelope(harran_ppp, fun = "Fest")
+plot(harran_fe)
+
+# K-Function
+harran_k <- Kest(harran_ppp)
+plot(harran_k)
+harran_ke <- envelope(harran_ppp, fun = "Kest")
+plot(harran_ke)
+
+harran_kinhom <- envelope(harran_ppp, fun = "Kinhom")
+```
+
+When the black line is out of the grey range, the points are clustered.
+
+```{r}
+harran_gi <- Ginhom(harran_ppp, lambda = predict(harran_rhohat))
+plot(harran_gi)
+```
 
 # References
 
