@@ -3,12 +3,12 @@ Type: Package
 Title: Demonstrates some concepts
 Version: 0.1.0
 Author: Henry Schubert
-Maintainer: Sarah I?elhorst <sarah.isselhorst@fu-berlin.de>
+Maintainer: Henry Schubert <h.schubert@fu-berlin.de>
 Description: This compendium contains code and
     data for the publication <http://www.sciencedirect.com.
     The version that matches the published results is archived at
     <doi:xxxx/xxx>
-Imports: dplyr, magrittr,spatstat, raster, rgal, rmarkdown, knitr, bookdown, readr, binford, mapview
+Imports: spatstat, raster, rgal, rmarkdown, knitr, bookdown, readr, binford, mapview
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
