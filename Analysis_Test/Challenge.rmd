@@ -22,7 +22,6 @@ library(mytestpkg)
 Reproducible research is important for scientific community [@marwick2017computational].Otherwise @roth2016short show the opportunity.And @bellwald2008hydraulic 
 
 
-This is a test function to test the fn:  `r Chal_func(15)`
 
 In table \@ref(tab:summarycars) you can see
 ```{r summarycars}
