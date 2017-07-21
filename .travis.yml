@@ -18,6 +18,6 @@ addons:
       - libproj-dev
 script:
 - Rscript -e "devtools::install()"
-- Rscript -e "rmarkdown::render('Analysis/Challenge.rmd')"
+- Rscript -e "rmarkdown::render('Analysis_Test/Challenge.rmd')"
 
 
